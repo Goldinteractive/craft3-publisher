@@ -1,0 +1,65 @@
+<?php
+/**
+ * @link      https://www.goldinteractive.ch
+ * @copyright Copyright (c) 2018 Gold Interactive
+ * @author Christian Ruhstaller
+ * @license MIT
+ */
+
+namespace goldinteractive\publisher\records;
+
+use craft\base\Element;
+use craft\db\ActiveRecord;
+use yii\db\ActiveQueryInterface;
+
+/**
+ * Class EntryPublish
+ *
+ * @package goldinteractive\publisher\records
+ *
+ * @property int       $id
+ * @property int       $entryId
+ * @property int       $draftId
+ * @property bool      $expire
+ * @property \DateTime $publishAt
+ */
+class EntryPublish extends ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName(): string
+    {
+        return '{{%entrypublishes}}';
+    }
+
+    /**
+     * Returns element
+     *
+     * @return ActiveQueryInterface
+     */
+    public function getElement(): ActiveQueryInterface
+    {
+        return $this->hasOne(Element::class, ['id' => 'id']);
+    }
+
+    /**
+     * Returns the entry.
+     *
+     * @return ActiveQueryInterface
+     */
+    public function getEntry(): ActiveQueryInterface
+    {
+        return $this->hasOne(Element::class, ['id' => 'entryId']);
+    }
+
+    /**
+     * Returns the entry draft.
+     *
+     * @return ActiveQueryInterface
+     */
+    public function getDraft(): ActiveQueryInterface
+    {
+        return $this->hasOne(Element::class, ['id' => 'draftId']);
+    }
+}

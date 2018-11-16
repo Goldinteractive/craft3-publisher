@@ -1,0 +1,74 @@
+{% import "_includes/forms" as forms %}
+{% set pendingEntries = craft.publisherEntries.getPendingEntries(entry.id) %}
+{% set drafts = craft.app.entryRevisions.getDraftsByEntryId(entry.id) %}
+{% set canPublishDraft = currentUser.can('publishEntries'~permissionSuffix) %}
+{% set isVersion = className(entry) == 'craft\\models\\EntryVersion' %}
+
+<div class="meta pane">
+    {% if pendingEntries|length == 0 %}
+        <div class="data">
+            <h4>{{ 'No pending publish dates'|t('publisher') }}</h4>
+        </div>
+    {% else %}
+        <div class="data">
+            <h4>{{ 'Pending publish dates'|t('publisher') }}</h4>
+        </div>
+
+        {% for pendingEntry in pendingEntries %}
+            {% set title = pendingEntry.draft ? pendingEntry.draft.name : pendingEntry.entry.title %}
+            <div class="data">
+                <h5>{{ title }}{{ pendingEntry.expire ? ' ('~'Expires'|t('publisher')~')' }}</h5>
+                <div class="value">
+                    {{ pendingEntry.publishAt|date('short') }} {{ pendingEntry.publishAt|time('short') }}
+                    &nbsp;<a href="{{ actionUrl('publisher/entries/delete/', {entryId: pendingEntry.id}) }}"
+                             class="btn small">{{ 'Delete'|t('app') }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% if drafts|length > 0 and canPublishDraft %}
+    <div id="settings" class="pane meta">
+        <div class="data">
+            <h4>{{ 'Schedule a publish date'|t('publisher') }}</h4>
+        </div>
+        <div class="field">
+            <div class="heading"><label>{{ 'Draft'|t('publisher') }}</label></div>
+            <div class="input">
+                <div class="select">
+                    <select name="publisher_draftId">
+                        {% for draft in drafts %}
+                            <option value="{{ draft.draftId }}">{{ draft.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        {{ forms.dateTimeField({
+            label: "Publish date"|t('publisher'),
+            id: 'publishAt',
+            name: 'publisher_publishAt',
+            value: now,
+            errors: publisherEntry is defined ? publisherEntry.getError('publishAt') : null,
+            disabled: isVersion
+        }) }}
+
+        <div class="data">
+            <div class="left">
+                <label class="warning">{{ 'Entry must be saved otherwise you will lose data'|t('publisher')  }}</label>
+            </div>
+            <div class="right">
+            </div>
+        </div>
+        <div class="data">
+            <div class="left">
+            </div>
+            <div class="right">
+                <input type="button" class="btn formsubmit" value="{{ 'Add publish date'|t('publisher')  }}"
+                       data-action="publisher/entries/save"/>
+            </div>
+        </div>
+    </div>
+{% endif %}
