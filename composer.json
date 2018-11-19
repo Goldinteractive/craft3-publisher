@@ -1,7 +1,7 @@
 {
   "name": "goldinteractive/craft3-publisher",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "craft-plugin",
   "require": {
