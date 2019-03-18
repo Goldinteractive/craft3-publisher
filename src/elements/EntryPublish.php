@@ -118,7 +118,7 @@ class EntryPublish extends Element
     /**
      * Returns the entry draft.
      *
-     * @return EntryDraft
+     * @return EntryDraft|null
      */
     public function getDraft() : ?EntryDraft
     {
@@ -142,9 +142,9 @@ class EntryPublish extends Element
     /**
      * Returns the entry.
      *
-     * @return Entry
+     * @return Entry|null
      */
-    public function getEntry() : Entry
+    public function getEntry() : ?Entry
     {
         $entry = $this->_entry;
 
