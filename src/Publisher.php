@@ -2,8 +2,8 @@
 /**
  * @link      https://www.goldinteractive.ch
  * @copyright Copyright (c) 2018 Gold Interactive
- * @author Christian Ruhstaller
- * @license MIT
+ * @author    Christian Ruhstaller
+ * @license   MIT
  */
 
 namespace goldinteractive\publisher;
@@ -75,7 +75,7 @@ class Publisher extends Plugin
                     return Craft::$app->view->renderTemplate(
                         'publisher/_cp/entriesEditRightPane',
                         [
-                            'permissionSuffix' => ':'.$entry->sectionId,
+                            'permissionSuffix' => ':'.$entry->getSection()->uid,
                             'entry'            => $entry,
                         ]
                     );
