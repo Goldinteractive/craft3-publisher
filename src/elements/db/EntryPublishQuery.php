@@ -47,19 +47,6 @@ class EntryPublishQuery extends ElementQuery
     }
 
     /**
-     * Filters the query results based on the draft ID.
-     *
-     * @param int|array|null $value The draft ID(s).
-     * @return $this
-     */
-    public function draftId(int $value)
-    {
-        $this->draftId = $value;
-
-        return $this;
-    }
-
-    /**
      * Filters the query results based on the DateTime.
      *
      * @param \DateTime|null $value The DateTime.
