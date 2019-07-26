@@ -60,7 +60,7 @@ class Entries extends Component
             Craft::$app->elements->deleteElementById($entryPublish->id);
 
             if ($draft !== null) {
-                Craft::$app->entryRevisions->publishDraft($draft);
+                Craft::$app->getDrafts()->applyDraft($draft);
             } else {
                 try {
                     Craft::$app->elements->saveElement($entry);
@@ -81,6 +81,8 @@ class Entries extends Component
      */
     public function getPendingEntries(int $id): array
     {
+        $query = EntryPublish::find()->sourceId($id);
+
         return EntryPublish::find()->sourceId($id)->all();
     }
 
@@ -120,7 +122,7 @@ class Entries extends Component
         }
 
         $record->sourceId = $model->sourceId;
-        $record->draftId = $model->draftId;
+        $record->publishDraftId = $model->publishDraftId;
         $record->publishAt = $model->publishAt;
         $record->expire = $model->expire;
 
@@ -212,7 +214,7 @@ class Entries extends Component
 
         /** @var EntryPublish $element */
         foreach ($elements as $element) {
-            if ($element->draftId === null) {
+            if ($element->publishDraftId === null) {
                 Craft::$app->elements->deleteElementById($element->id);
             }
         }
@@ -230,7 +232,7 @@ class Entries extends Component
 
         /** @var EntryPublish $element */
         foreach ($elements as $element) {
-            if ($element->draftId === null) {
+            if ($element->publishDraftId === null) {
                 Craft::$app->elements->deleteElementById($element->id);
             }
         }

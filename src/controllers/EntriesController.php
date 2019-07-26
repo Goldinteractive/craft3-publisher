@@ -9,13 +9,12 @@
 namespace goldinteractive\publisher\controllers;
 
 use Craft;
+use craft\elements\Entry;
 use craft\errors\ElementNotFoundException;
-use craft\errors\EntryDraftNotFoundException;
 use craft\helpers\DateTimeHelper;
 use craft\web\Controller;
 use goldinteractive\publisher\elements\EntryPublish;
 use goldinteractive\publisher\Publisher;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -29,7 +28,6 @@ class EntriesController extends Controller
      * Saves an EntryPublish.
      *
      * @throws ElementNotFoundException
-     * @throws EntryDraftNotFoundException
      * @throws \Throwable
      * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
@@ -42,13 +40,15 @@ class EntriesController extends Controller
         $draftId = Craft::$app->request->post('publisher_draftId');
         $publishAt = Craft::$app->request->post('publisher_publishAt');
 
-        $draft = Craft::$app->entryRevisions->getDraftById($draftId);
+        $draft = Entry::find()
+            ->draftId($draftId)
+            ->one();
 
         if ($draft === null) {
-            throw new EntryDraftNotFoundException('Invalid entry draft ID: '.$draftId);
+            throw new \Exception('Invalid entry draft ID: '.$draftId);
         }
 
-        $entry = Craft::$app->entries->getEntryById($draft->id, $draft->siteId);
+        $entry = Craft::$app->entries->getEntryById($draft->sourceId, $draft->siteId);
 
         if ($entry === null) {
             throw new ElementNotFoundException("No element exists with the ID '{$draft->id}'");
@@ -64,7 +64,7 @@ class EntriesController extends Controller
 
         $model = new EntryPublish();
         $model->sourceId = $entry->id;
-        $model->draftId = $draft->draftId;
+        $model->publishDraftId = $draft->draftId;
         $model->publishAt = $publishAt;
 
         if (!Publisher::getInstance()->entries->saveEntryPublish($model)) {

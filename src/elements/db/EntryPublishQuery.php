@@ -21,7 +21,7 @@ class EntryPublishQuery extends ElementQuery
     /**
      * @var int|array|null The draft ID(s) to query for.
      */
-    public $draftId;
+    public $publishDraftId;
 
     /**
      * @var \DateTime|null The DateTime to query for.
@@ -89,8 +89,8 @@ class EntryPublishQuery extends ElementQuery
             $this->subQuery->andWhere(Db::parseParam('entrypublishes.sourceId', $this->sourceId));
         }
 
-        if ($this->draftId !== null) {
-            $this->subQuery->andWhere(Db::parseParam('entrypublishes.draftId', $this->draftId));
+        if ($this->publishDraftId !== null) {
+            $this->subQuery->andWhere(Db::parseParam('entrypublishes.publishDraftId', $this->publishDraftId));
         }
 
         if ($this->publishAt !== null) {

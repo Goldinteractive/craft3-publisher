@@ -19,7 +19,7 @@ use yii\db\ActiveQueryInterface;
  *
  * @property int       $id
  * @property int       $sourceId
- * @property int       $draftId
+ * @property int       $publishDraftId
  * @property bool      $expire
  * @property \DateTime $publishAt
  */
@@ -60,6 +60,6 @@ class EntryPublish extends ActiveRecord
      */
     public function getDraft(): ActiveQueryInterface
     {
-        return $this->hasOne(Element::class, ['id' => 'draftId']);
+        return $this->hasOne(Element::class, ['id' => 'publishDraftId']);
     }
 }

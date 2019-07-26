@@ -15,12 +15,12 @@
         </div>
 
         {% for pendingEntry in pendingEntries %}
-            {% set title = pendingEntry.draft ? pendingEntry.draft.name : pendingEntry.entry.title %}
+            {% set title = pendingEntry.draft ? pendingEntry.draft.draftName : pendingEntry.entry.title %}
             <div class="data">
                 <h5>{{ title }}{{ pendingEntry.expire ? ' ('~'Expires'|t('publisher')~')' }}</h5>
                 <div class="value">
                     {{ pendingEntry.publishAt|date('short') }} {{ pendingEntry.publishAt|time('short') }}
-                    &nbsp;<a href="{{ actionUrl('publisher/entries/delete/', {entryId: pendingEntry.id}) }}"
+                    &nbsp;<a href="{{ actionUrl('publisher/entries/delete/', {sourceId: pendingEntry.id}) }}"
                              class="btn small">{{ 'Delete'|t('app') }}</a>
                 </div>
             </div>

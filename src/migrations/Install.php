@@ -29,14 +29,14 @@ class Install extends Migration
             $this->createTable(
                 '{{%entrypublishes}}',
                 [
-                    'id'          => $this->integer()->notNull(),
-                    'sourceId'    => $this->integer()->notNull(),
-                    'draftId'     => $this->integer(),
-                    'publishAt'   => $this->dateTime()->notNull(),
-                    'expire'      => $this->boolean()->defaultValue(false),
-                    'dateCreated' => $this->dateTime()->notNull(),
-                    'dateUpdated' => $this->dateTime()->notNull(),
-                    'uid'         => $this->uid(),
+                    'id'             => $this->integer()->notNull(),
+                    'sourceId'       => $this->integer()->notNull(),
+                    'publishDraftId' => $this->integer(),
+                    'publishAt'      => $this->dateTime()->notNull(),
+                    'expire'         => $this->boolean()->defaultValue(false),
+                    'dateCreated'    => $this->dateTime()->notNull(),
+                    'dateUpdated'    => $this->dateTime()->notNull(),
+                    'uid'            => $this->uid(),
                     'PRIMARY KEY([[id]])',
                 ]
             );
@@ -48,7 +48,7 @@ class Install extends Migration
             $this->addForeignKey(
                 null,
                 '{{%entrypublishes}}',
-                ['draftId'],
+                ['publishDraftId'],
                 '{{%drafts}}',
                 ['id'],
                 'CASCADE',
