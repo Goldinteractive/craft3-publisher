@@ -10,7 +10,7 @@ use craft\helpers\MigrationHelper;
 /**
  * m190726_074724_craft32_upgrade migration.
  */
-class sm190726_074724_craft32_upgrade extends Migration
+class m190726_074724_craft32_upgrade extends Migration
 {
     /**
      * @inheritdoc
@@ -27,6 +27,8 @@ class sm190726_074724_craft32_upgrade extends Migration
             'CASCADE',
             'CASCADE'
         );
+
+        $this->renameColumn('{{%entrypublishes}}', 'entryId', 'sourceId');
     }
 
     /**

@@ -16,7 +16,7 @@ class EntryPublishQuery extends ElementQuery
     /**
      * @var int|array|null The entry ID(s) to query for.
      */
-    public $entryId;
+    public $sourceId;
 
     /**
      * @var int|array|null The draft ID(s) to query for.
@@ -34,14 +34,14 @@ class EntryPublishQuery extends ElementQuery
     public $expire;
 
     /**
-     * Filters the query results based on the entry ID.
+     * Filters the query results based on the element ID.
      *
-     * @param int|array|null $value The entry ID(s).
+     * @param int|array|null $value The element ID(s).
      * @return $this
      */
-    public function entryId(int $value)
+    public function sourceId(int $value)
     {
-        $this->entryId = $value;
+        $this->sourceId = $value;
 
         return $this;
     }
@@ -85,8 +85,8 @@ class EntryPublishQuery extends ElementQuery
             ]
         );
 
-        if ($this->entryId !== null) {
-            $this->subQuery->andWhere(Db::parseParam('entrypublishes.entryId', $this->entryId));
+        if ($this->sourceId !== null) {
+            $this->subQuery->andWhere(Db::parseParam('entrypublishes.sourceId', $this->sourceId));
         }
 
         if ($this->draftId !== null) {

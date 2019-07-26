@@ -63,7 +63,7 @@ class EntriesController extends Controller
         }
 
         $model = new EntryPublish();
-        $model->entryId = $entry->id;
+        $model->sourceId = $entry->id;
         $model->draftId = $draft->draftId;
         $model->publishAt = $publishAt;
 
@@ -86,7 +86,7 @@ class EntriesController extends Controller
     public function actionDelete()
     {
         $entriesService = Publisher::getInstance()->entries;
-        $publishEntryId = Craft::$app->request->getQueryParam('entryId');
+        $publishEntryId = Craft::$app->request->getQueryParam('sourceId');
 
         if ($publishEntryId === null) {
             throw new NotFoundHttpException('EntryPublish not found');

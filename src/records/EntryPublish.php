@@ -18,7 +18,7 @@ use yii\db\ActiveQueryInterface;
  * @package goldinteractive\publisher\records
  *
  * @property int       $id
- * @property int       $entryId
+ * @property int       $sourceId
  * @property int       $draftId
  * @property bool      $expire
  * @property \DateTime $publishAt
@@ -44,13 +44,13 @@ class EntryPublish extends ActiveRecord
     }
 
     /**
-     * Returns the entry.
+     * Returns the element.
      *
      * @return ActiveQueryInterface
      */
     public function getEntry(): ActiveQueryInterface
     {
-        return $this->hasOne(Element::class, ['id' => 'entryId']);
+        return $this->hasOne(Element::class, ['id' => 'sourceId']);
     }
 
     /**

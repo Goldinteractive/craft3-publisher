@@ -27,7 +27,7 @@ class EntryPublish extends Element
     /**
      * @var int
      */
-    public $entryId;
+    public $sourceId;
 
     /**
      * @var int
@@ -100,7 +100,7 @@ class EntryPublish extends Element
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules[] = [['entryId', 'draftId'], 'number', 'integerOnly' => true];
+        $rules[] = [['sourceId', 'draftId'], 'number', 'integerOnly' => true];
         $rules[] = [['publishAt'], DateTimeValidator::class];
         $rules[] = [['expire'], BooleanValidator::class];
 
@@ -152,8 +152,8 @@ class EntryPublish extends Element
             if ($entry === false) {
                 $entry = null;
             }
-        } elseif ($this->entryId !== null) {
-            $entry = Craft::$app->entries->getEntryById($this->entryId);
+        } elseif ($this->sourceId !== null) {
+            $entry = Craft::$app->entries->getEntryById($this->sourceId);
 
             if ($entry === null) {
                 $this->_entry = false;

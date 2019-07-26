@@ -2,8 +2,8 @@
 /**
  * @link      https://www.goldinteractive.ch
  * @copyright Copyright (c) 2018 Gold Interactive
- * @author Christian Ruhstaller
- * @license MIT
+ * @author    Christian Ruhstaller
+ * @license   MIT
  */
 
 namespace goldinteractive\publisher\migrations;
@@ -30,7 +30,7 @@ class Install extends Migration
                 '{{%entrypublishes}}',
                 [
                     'id'          => $this->integer()->notNull(),
-                    'entryId'     => $this->integer()->notNull(),
+                    'sourceId'    => $this->integer()->notNull(),
                     'draftId'     => $this->integer(),
                     'publishAt'   => $this->dateTime()->notNull(),
                     'expire'      => $this->boolean()->defaultValue(false),
@@ -44,7 +44,7 @@ class Install extends Migration
         // Add foreign keys
         if (!$hasEntryPublishTable) {
             $this->addForeignKey(null, '{{%entrypublishes}}', ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
-            $this->addForeignKey(null, '{{%entrypublishes}}', ['entryId'], '{{%elements}}', ['id'], 'CASCADE', null);
+            $this->addForeignKey(null, '{{%entrypublishes}}', ['sourceId'], '{{%elements}}', ['id'], 'CASCADE', null);
             $this->addForeignKey(
                 null,
                 '{{%entrypublishes}}',

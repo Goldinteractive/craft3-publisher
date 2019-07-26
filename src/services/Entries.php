@@ -81,7 +81,7 @@ class Entries extends Component
      */
     public function getPendingEntries(int $id): array
     {
-        return EntryPublish::find()->entryId($id)->all();
+        return EntryPublish::find()->sourceId($id)->all();
     }
 
     /**
@@ -119,7 +119,7 @@ class Entries extends Component
             $record = new \goldinteractive\publisher\records\EntryPublish();
         }
 
-        $record->entryId = $model->entryId;
+        $record->sourceId = $model->sourceId;
         $record->draftId = $model->draftId;
         $record->publishAt = $model->publishAt;
         $record->expire = $model->expire;
@@ -177,7 +177,7 @@ class Entries extends Component
     public function onSaveEntry(Entry $entry): bool
     {
         $model = new EntryPublish();
-        $model->entryId = $entry->id;
+        $model->sourceId = $entry->id;
 
         if ($entry->postDate > $this->now) {
             $model->publishAt = $entry->postDate;
@@ -208,7 +208,7 @@ class Entries extends Component
      */
     protected function clearExistingPublishings(Entry $entry): void
     {
-        $elements = EntryPublish::find()->entryId($entry->id)->expire(false)->all();
+        $elements = EntryPublish::find()->sourceId($entry->id)->expire(false)->all();
 
         /** @var EntryPublish $element */
         foreach ($elements as $element) {
@@ -226,7 +226,7 @@ class Entries extends Component
      */
     protected function clearExistingUnpublishings(Entry $entry): void
     {
-        $elements = EntryPublish::find()->entryId($entry->id)->expire(true)->all();
+        $elements = EntryPublish::find()->sourceId($entry->id)->expire(true)->all();
 
         /** @var EntryPublish $element */
         foreach ($elements as $element) {
