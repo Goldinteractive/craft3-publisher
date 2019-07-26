@@ -49,7 +49,7 @@ class Install extends Migration
                 null,
                 '{{%entrypublishes}}',
                 ['draftId'],
-                '{{%entrydrafts}}',
+                '{{%drafts}}',
                 ['id'],
                 'CASCADE',
                 'CASCADE'

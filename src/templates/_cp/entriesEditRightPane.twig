@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% set pendingEntries = craft.publisherEntries.getPendingEntries(entry.id) %}
-{% set drafts = craft.app.entryRevisions.getDraftsByEntryId(entry.id) %}
+{% set drafts = craft.entries.draftOf(entry.id).all %}
 {% set canPublishDraft = currentUser.can('publishEntries'~permissionSuffix) %}
 {% set isVersion = className(entry) == 'craft\\models\\EntryVersion' %}
 
@@ -39,7 +39,7 @@
                 <div class="select">
                     <select name="publisher_draftId">
                         {% for draft in drafts %}
-                            <option value="{{ draft.draftId }}">{{ draft.name }}</option>
+                            <option value="{{ draft.draftId }}">{{ draft.draftName }}</option>
                         {% endfor %}
                     </select>
                 </div>

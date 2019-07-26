@@ -27,6 +27,11 @@ use yii\base\Event;
  */
 class Publisher extends Plugin
 {
+    /**
+     * @inheritdoc
+     */
+    public $schemaVersion = '2.0.0';
+
     public function init()
     {
         parent::init();
