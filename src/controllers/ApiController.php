@@ -21,7 +21,7 @@ class ApiController extends Controller
     /**
      * @inheritdoc
      */
-    protected $allowAnonymous = ['actionPublish'];
+    protected $allowAnonymous = ['publish'];
 
     /**
      * Publishes or expires all due entries.
