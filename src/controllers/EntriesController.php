@@ -55,7 +55,7 @@ class EntriesController extends Controller
         }
 
         if ($draft->enabled) {
-            $this->requirePermission('publishEntries:'.$entry->sectionId);
+            $this->requirePermission('publishEntries:'.$entry->section->uid);
         }
 
         if ($publishAt !== null) {

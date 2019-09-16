@@ -1,7 +1,7 @@
 {
   "name": "goldinteractive/craft3-publisher",
   "description": "",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "type": "craft-plugin",
   "require": {
@@ -15,7 +15,7 @@
   "extra": {
     "handle": "publisher",
     "name": "Publisher",
-    "schemaVersion": "2.0.1",
+    "schemaVersion": "2.0.2",
     "developer": "Gold Interactive",
     "developerUrl": "http://goldinteractive.ch",
     "class": "goldinteractive\\publisher\\Publisher"
