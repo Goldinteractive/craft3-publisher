@@ -61,7 +61,7 @@ class Entries extends Component
 
             if ($draft !== null) {
                 Craft::$app->getDrafts()->applyDraft($draft);
-            } else {
+            } elseif ($entry !== null) {
                 try {
                     Craft::$app->elements->saveElement($entry);
                 } catch (\Throwable $e) {
