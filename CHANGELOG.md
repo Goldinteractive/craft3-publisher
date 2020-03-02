@@ -1,7 +1,8 @@
 # Changelog
 
 ## 2.0.3 - 2020-03-02
-- Fixed exception when entry due to publish has been deleted
+### Fixed
+- Exception when entry due to publish has been deleted
 
 ## 2.0.2 - 2019-09-16
 ### Fixed
