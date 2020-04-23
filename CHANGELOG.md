@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4 - 2020-04-23
+### Fixed
+- Error on plugin re-install and upgrade from craft 2
+
 ## 2.0.3 - 2020-03-02
 ### Fixed
 - Exception when entry due to publish has been deleted
