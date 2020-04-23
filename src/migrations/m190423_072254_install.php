@@ -15,7 +15,7 @@ use craft\db\Migration;
  *
  * @package goldinteractive\publisher\migrations
  */
-class Install extends Migration
+class m190423_072254_install extends Migration
 {
     /**
      * @inheritdoc
@@ -29,14 +29,14 @@ class Install extends Migration
             $this->createTable(
                 '{{%entrypublishes}}',
                 [
-                    'id'             => $this->integer()->notNull(),
-                    'sourceId'       => $this->integer()->notNull(),
-                    'publishDraftId' => $this->integer(),
-                    'publishAt'      => $this->dateTime()->notNull(),
-                    'expire'         => $this->boolean()->defaultValue(false),
-                    'dateCreated'    => $this->dateTime()->notNull(),
-                    'dateUpdated'    => $this->dateTime()->notNull(),
-                    'uid'            => $this->uid(),
+                    'id'          => $this->integer()->notNull(),
+                    'entryId'     => $this->integer()->notNull(),
+                    'draftId'     => $this->integer(),
+                    'publishAt'   => $this->dateTime()->notNull(),
+                    'expire'      => $this->boolean()->defaultValue(false),
+                    'dateCreated' => $this->dateTime()->notNull(),
+                    'dateUpdated' => $this->dateTime()->notNull(),
+                    'uid'         => $this->uid(),
                     'PRIMARY KEY([[id]])',
                 ]
             );
@@ -44,11 +44,11 @@ class Install extends Migration
         // Add foreign keys
         if (!$hasEntryPublishTable) {
             $this->addForeignKey(null, '{{%entrypublishes}}', ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
-            $this->addForeignKey(null, '{{%entrypublishes}}', ['sourceId'], '{{%elements}}', ['id'], 'CASCADE', null);
+            $this->addForeignKey(null, '{{%entrypublishes}}', ['entryId'], '{{%elements}}', ['id'], 'CASCADE', null);
             $this->addForeignKey(
                 null,
                 '{{%entrypublishes}}',
-                ['publishDraftId'],
+                ['draftId'],
                 '{{%drafts}}',
                 ['id'],
                 'CASCADE',
