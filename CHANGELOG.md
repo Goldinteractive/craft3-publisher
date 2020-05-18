@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.5 - 2020-05-18
+### Fixed
+- Fixed installation migration
+### Changed
+- Changed UI to resemble new CP UI
+
 ## 2.0.4 - 2020-04-23
 ### Fixed
 - Error on plugin re-install and upgrade from craft 2
