@@ -15,7 +15,7 @@ use craft\db\Migration;
  *
  * @package goldinteractive\publisher\migrations
  */
-class m190423_072254_install extends Migration
+class Install extends Migration
 {
     /**
      * @inheritdoc
@@ -30,8 +30,8 @@ class m190423_072254_install extends Migration
                 '{{%entrypublishes}}',
                 [
                     'id'          => $this->integer()->notNull(),
-                    'entryId'     => $this->integer()->notNull(),
-                    'draftId'     => $this->integer(),
+                    'sourceId'     => $this->integer()->notNull(),
+                    'publishDraftId'     => $this->integer(),
                     'publishAt'   => $this->dateTime()->notNull(),
                     'expire'      => $this->boolean()->defaultValue(false),
                     'dateCreated' => $this->dateTime()->notNull(),
@@ -44,11 +44,11 @@ class m190423_072254_install extends Migration
         // Add foreign keys
         if (!$hasEntryPublishTable) {
             $this->addForeignKey(null, '{{%entrypublishes}}', ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
-            $this->addForeignKey(null, '{{%entrypublishes}}', ['entryId'], '{{%elements}}', ['id'], 'CASCADE', null);
+            $this->addForeignKey(null, '{{%entrypublishes}}', ['sourceId'], '{{%elements}}', ['id'], 'CASCADE', null);
             $this->addForeignKey(
                 null,
                 '{{%entrypublishes}}',
-                ['draftId'],
+                ['publishDraftId'],
                 '{{%drafts}}',
                 ['id'],
                 'CASCADE',
