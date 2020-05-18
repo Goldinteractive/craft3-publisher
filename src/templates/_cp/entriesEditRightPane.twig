@@ -4,32 +4,34 @@
 {% set canPublishDraft = currentUser.can('publishEntries'~permissionSuffix) %}
 {% set isVersion = className(entry) == 'craft\\models\\EntryVersion' %}
 
-<div class="meta pane">
-    {% if pendingEntries|length == 0 %}
-        <div class="data">
-            <h4>{{ 'No pending publish dates'|t('publisher') }}</h4>
-        </div>
-    {% else %}
-        <div class="data">
-            <h4>{{ 'Pending publish dates'|t('publisher') }}</h4>
-        </div>
-
-        {% for pendingEntry in pendingEntries %}
-            {% set title = pendingEntry.draft ? pendingEntry.draft.draftName : pendingEntry.entry.title %}
+<div class="meta" style="padding-top: 14px; padding-bottom: 14px;">
+    <div class="field">
+        {% if pendingEntries|length == 0 %}
             <div class="data">
-                <h5>{{ title }}{{ pendingEntry.expire ? ' ('~'Expires'|t('publisher')~')' }}</h5>
-                <div class="value">
-                    {{ pendingEntry.publishAt|date('short') }} {{ pendingEntry.publishAt|time('short') }}
-                    &nbsp;<a href="{{ actionUrl('publisher/entries/delete/', {sourceId: pendingEntry.id}) }}"
-                             class="btn small">{{ 'Delete'|t('app') }}</a>
-                </div>
+                <h4>{{ 'No pending publish dates'|t('publisher') }}</h4>
             </div>
-        {% endfor %}
-    {% endif %}
+        {% else %}
+            <div class="data">
+                <h4>{{ 'Pending publish dates'|t('publisher') }}</h4>
+            </div>
+
+            {% for pendingEntry in pendingEntries %}
+                {% set title = pendingEntry.draft ? pendingEntry.draft.draftName : pendingEntry.entry.title %}
+                <div class="data">
+                    <h5>{{ title }}{{ pendingEntry.expire ? ' ('~'Expires'|t('publisher')~')' }}</h5>
+                    <div class="value">
+                        {{ pendingEntry.publishAt|date('short') }} {{ pendingEntry.publishAt|time('short') }}
+                        &nbsp;<a href="{{ actionUrl('publisher/entries/delete/', {sourceId: pendingEntry.id}) }}"
+                                 class="btn small">{{ 'Delete'|t('app') }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
 
 {% if drafts|length > 0 and canPublishDraft %}
-    <div id="settings" class="pane meta">
+    <div class="meta"  style="padding-top: 14px; padding-bottom: 14px;">
         <div class="data">
             <h4>{{ 'Schedule a publish date'|t('publisher') }}</h4>
         </div>
