@@ -2,8 +2,8 @@
 /**
  * @link      https://www.goldinteractive.ch
  * @copyright Copyright (c) 2018 Gold Interactive
- * @author Christian Ruhstaller
- * @license MIT
+ * @author    Christian Ruhstaller
+ * @license   MIT
  */
 
 namespace goldinteractive\publisher\elements;
@@ -28,6 +28,11 @@ class EntryPublish extends Element
      * @var int
      */
     public $sourceId;
+
+    /**
+     * @var int
+     */
+    public $sourceSiteId;
 
     /**
      * @var int
@@ -100,7 +105,7 @@ class EntryPublish extends Element
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules[] = [['sourceId', 'publishDraftId'], 'number', 'integerOnly' => true];
+        $rules[] = [['sourceId', 'sourceSiteId', 'publishDraftId'], 'number', 'integerOnly' => true];
         $rules[] = [['publishAt'], DateTimeValidator::class];
         $rules[] = [['expire'], BooleanValidator::class];
 
@@ -120,7 +125,7 @@ class EntryPublish extends Element
      *
      * @return Entry|null
      */
-    public function getDraft() : ?Entry
+    public function getDraft(): ?Entry
     {
         $draft = $this->_draft;
 
@@ -129,7 +134,10 @@ class EntryPublish extends Element
                 $draft = null;
             }
         } elseif ($this->publishDraftId !== null) {
-            $draft = Craft::$app->entryRevisions->getDraftById($this->publishDraftId);
+            $draft = Entry::find()
+                ->draftId($this->publishDraftId)
+                ->siteId($this->sourceSiteId)
+                ->one();
 
             if ($draft === null) {
                 $this->_draft = false;
@@ -144,7 +152,7 @@ class EntryPublish extends Element
      *
      * @return Entry|null
      */
-    public function getEntry() : ?Entry
+    public function getEntry(): ?Entry
     {
         $entry = $this->_entry;
 
@@ -153,7 +161,7 @@ class EntryPublish extends Element
                 $entry = null;
             }
         } elseif ($this->sourceId !== null) {
-            $entry = Craft::$app->entries->getEntryById($this->sourceId);
+            $entry = Craft::$app->entries->getEntryById($this->sourceId, $this->sourceSiteId);
 
             if ($entry === null) {
                 $this->_entry = false;

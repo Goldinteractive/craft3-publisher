@@ -39,19 +39,21 @@ class EntriesController extends Controller
 
         $draftId = Craft::$app->request->post('publisher_draftId');
         $publishAt = Craft::$app->request->post('publisher_publishAt');
+        $siteId = Craft::$app->request->post('publisher_sourceSiteId');
 
         $draft = Entry::find()
             ->draftId($draftId)
+            ->siteId($siteId)
             ->one();
 
         if ($draft === null) {
             throw new \Exception('Invalid entry draft ID: '.$draftId);
         }
 
-        $entry = Craft::$app->entries->getEntryById($draft->sourceId, $draft->siteId);
+        $entry = Craft::$app->entries->getEntryById($draft->sourceId, $siteId);
 
         if ($entry === null) {
-            throw new ElementNotFoundException("No element exists with the ID '{$draft->id}'");
+            throw new ElementNotFoundException("No element exists with the ID '{$draft->sourceId}'");
         }
 
         if ($draft->enabled) {
@@ -66,6 +68,7 @@ class EntriesController extends Controller
         $model->sourceId = $entry->id;
         $model->publishDraftId = $draft->draftId;
         $model->publishAt = $publishAt;
+        $model->sourceSiteId = $siteId;
 
         if (!Publisher::getInstance()->entries->saveEntryPublish($model)) {
             Craft::$app->getUrlManager()->setRouteParams(

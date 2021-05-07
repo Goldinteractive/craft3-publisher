@@ -30,7 +30,7 @@ class Publisher extends Plugin
     /**
      * @inheritdoc
      */
-    public $schemaVersion = '2.0.0';
+    public $schemaVersion = '2.0.6';
 
     public function init()
     {

@@ -19,6 +19,11 @@ class EntryPublishQuery extends ElementQuery
     public $sourceId;
 
     /**
+     * @var int|array|null The entry site ID(s) to query for.
+     */
+    public $sourceSiteId;
+
+    /**
      * @var int|array|null The draft ID(s) to query for.
      */
     public $publishDraftId;
@@ -42,6 +47,19 @@ class EntryPublishQuery extends ElementQuery
     public function sourceId(int $value)
     {
         $this->sourceId = $value;
+
+        return $this;
+    }
+
+    /**
+     * Filters the query results based on the element site ID.
+     *
+     * @param int|array|null $value The element site ID(s).
+     * @return $this
+     */
+    public function sourceSiteId(int $value)
+    {
+        $this->sourceSiteId = $value;
 
         return $this;
     }
@@ -87,6 +105,10 @@ class EntryPublishQuery extends ElementQuery
 
         if ($this->sourceId !== null) {
             $this->subQuery->andWhere(Db::parseParam('entrypublishes.sourceId', $this->sourceId));
+        }
+
+        if ($this->sourceSiteId !== null) {
+            $this->subQuery->andWhere(Db::parseParam('entrypublishes.sourceSiteId', $this->sourceSiteId));
         }
 
         if ($this->publishDraftId !== null) {

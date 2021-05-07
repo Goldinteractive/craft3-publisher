@@ -2,8 +2,8 @@
 /**
  * @link      https://www.goldinteractive.ch
  * @copyright Copyright (c) 2018 Gold Interactive
- * @author Christian Ruhstaller
- * @license MIT
+ * @author    Christian Ruhstaller
+ * @license   MIT
  */
 
 namespace goldinteractive\publisher\records;
@@ -19,6 +19,7 @@ use yii\db\ActiveQueryInterface;
  *
  * @property int       $id
  * @property int       $sourceId
+ * @property int       $sourceSiteId
  * @property int       $publishDraftId
  * @property bool      $expire
  * @property \DateTime $publishAt

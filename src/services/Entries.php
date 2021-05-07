@@ -81,9 +81,10 @@ class Entries extends Component
      */
     public function getPendingEntries(int $id): array
     {
+        // returns results for all sites
         $query = EntryPublish::find()->sourceId($id);
 
-        return EntryPublish::find()->sourceId($id)->all();
+        return $query->all();
     }
 
     /**
@@ -122,6 +123,7 @@ class Entries extends Component
         }
 
         $record->sourceId = $model->sourceId;
+        $record->sourceSiteId = $model->sourceSiteId;
         $record->publishDraftId = $model->publishDraftId;
         $record->publishAt = $model->publishAt;
         $record->expire = $model->expire;
@@ -180,6 +182,7 @@ class Entries extends Component
     {
         $model = new EntryPublish();
         $model->sourceId = $entry->id;
+        $model->sourceSiteId = $entry->siteId;
 
         if ($entry->postDate > $this->now) {
             $model->publishAt = $entry->postDate;
