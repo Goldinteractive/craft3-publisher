@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.6 - 2021-05-12
+### Fixed
+- Fixed a bug where drafts which didn't exist on the primary site couldn't be published
+
 ## 2.0.5 - 2020-05-18
 ### Fixed
 - Fixed installation migration
